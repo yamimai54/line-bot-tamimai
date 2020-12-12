@@ -15,8 +15,8 @@ app = Flask(__name__)
  
 #環境変数取得
 # LINE Developersで設定されているアクセストークンとChannel Secretをを取得し、設定します。
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+YOUR_CHANNEL_ACCESS_TOKEN = os.environ.get("YOUR_CHANNEL_ACCESS_TOKEN")
+YOUR_CHANNEL_SECRET = os.environ.get("YOUR_CHANNEL_SECRET")
  
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -38,7 +38,7 @@ def callback():
     try:
         handler.handle(body, signature)
   # 署名検証で失敗した場合、例外を出す。
-    except InvalidSignatureError:
+    except I    nvalidSignatureError:
         abort(400)
   # handleの処理を終えればOK
     return 'OK'
@@ -63,4 +63,4 @@ def handle_message(event):
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
